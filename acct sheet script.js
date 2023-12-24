@@ -30,13 +30,18 @@ function cal() {
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbxqRHW9Rc3fLF9_pPDXOQHgI7TBWdqAl307TrBtEd1fSpDnaXD7NiVDpBg4OzyDXcSC4g/exec";
 const form = document.forms["google-sheet"];
-
+const btn = document.getElementById("btn");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  btn.setAttribute("disabled", "True");
+  btn.style.cursor = "not-allowed";
   document.getElementById("btn").innerText = "Please wait...";
   fetch(scriptURL, { method: "POST", body: new FormData(form) })
     .then((response) => {
       alert("Added successfully...");
+      btn.removeAttribute("disabled");
+      btn.style.cursor = "pointer";
+
       location.reload();
       document.getElementById("btn").innerText = "Submit";
     })
